@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/UserContext';
 
 const Register = () => {
-    const {createUser,signInWithGoogle} = useContext(AuthContext);
+    const {createUser,signInWithGoogle, signInWithGithub, signInWithFB} = useContext(AuthContext);
     const handleSubmit =event =>{
         event.preventDefault();
         const form = event.target;
@@ -28,8 +28,26 @@ const Register = () => {
             const user = result.user;
             // console.log(user)
           })
-          .catch(error =>console.error)
+          .catch(error =>console.error(error))
     }
+    const handleGithubSignIn = () =>{
+      signInWithGithub() 
+      .then(result =>{
+        const user = result.user;
+      })
+      .catch(error =>{
+        console.error("error", error)
+      })
+    }
+    const handleFacebookignIn = () =>{
+      signInWithFB()
+      .then(result =>{
+        const  user = result.user;
+        console.log(user)
+      })
+      .catch(error => console.error(error))
+    }
+
   return (
     <div>
       <div className="hero min-h-screen bg-base-200">
@@ -86,6 +104,8 @@ const Register = () => {
               </div>
             </form>
             <button onClick={handleGoogleSignIn} className="btn btn-primary">Signin with Google</button>
+            <button onClick={handleGithubSignIn} className="btn btn-primary mt-2">Signin with Github</button>
+            <button onClick={handleFacebookignIn} className="btn btn-primary mt-2">Signin with Facebook</button>
           </div>
         </div>
       </div>
